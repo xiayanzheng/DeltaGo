@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"lfcomlibGO/dapr"
 	"lfcomlibGO/infra"
+	"os"
 	"time"
 )
 
 var (
-	TimeGap int
+	TimeGap     int
+	DurationMin int
 )
 
 func starter() {
@@ -39,10 +41,24 @@ func SetCsvFile() string {
 	return FileName
 }
 
+func SetDuration() int {
+	dapr.GetCmdArg()
+	if len(dapr.GetCmdArg()) < 3 {
+		println("Please input time Duration(Minutes):")
+		fmt.Scan(&DurationMin)
+		return DurationMin * 60
+	} else {
+		DurationMin := dapr.StringToInt(dapr.GetCmdArg()[2])
+		return DurationMin * 60
+	}
+}
+
 func Run() {
 	starter()
 	TimeGap := SetTimeGap()
 	FileName := SetCsvFile()
+	DurationSec := SetDuration()
+	var DurationSecX int
 	for {
 		CpuP := infra.GetCpuPercent()
 		MemoP := infra.GetMemoInfo()
@@ -50,6 +66,10 @@ func Run() {
 		row := []string{dapr.TimeNowFormat_YYYY_MM_DD_HH_MM_SS(), dapr.IntToString(CpuP), dapr.IntToString(MemoP)}
 		dapr.WriteCSV(FileName, row)
 		fmt.Printf("Time:%s CPU:%s Memo:%s\n", row[0], row[1], row[2])
-		time.Sleep(time.Duration(TimeGap) * time.Second)
+		time.Sleep(time.Duration(TimeGap-1) * time.Second)
+		DurationSecX += TimeGap
+		if DurationSecX >= DurationSec {
+			os.Exit(0)
+		}
 	}
 }
