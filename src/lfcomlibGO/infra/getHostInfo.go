@@ -1,15 +1,22 @@
-package main
+package infra
 
 import (
 	"fmt"
-	"time"
-
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/mem"
+	"time"
 )
 
+func GetMemoInfo() int {
+	v, _ := mem.VirtualMemory()
+
+	//fmt.Printf("Total: %v, Free:%v, UsedPercent:%f%%\n", v.Total, v.Free, v.UsedPercent)
+	// convert to JSON. String() is also implemented
+	return int(v.UsedPercent)
+}
+
 // cpu info
-func getCpuInfo() {
+func GetCpuInfo() {
 	cpuInfos, err := cpu.Info()
 	if err != nil {
 		fmt.Printf("get cpu info failed, err:%v", err)
@@ -17,24 +24,15 @@ func getCpuInfo() {
 	for _, ci := range cpuInfos {
 		fmt.Println(ci)
 	}
-	// CPU使用率
+}
+
+func GetCpuPercent() int {
 	percent, _ := cpu.Percent(time.Second, true)
 	// fmt.Println("type:", reflect.TypeOf(percent))
-	println(percent)
 	var sum float64 = 0
 	for _, num := range percent {
 		sum += num
 	}
-	fmt.Println("sum:", int(sum))
-
-	fmt.Printf("cpu percent:%v\n", percent)
-}
-
-func main() {
-	v, _ := mem.VirtualMemory()
-	getCpuInfo()
-	// almost every return value is a struct
-	fmt.Printf("Total: %v, Free:%v, UsedPercent:%f%%\n", v.Total, v.Free, v.UsedPercent)
-	// convert to JSON. String() is also implemented
-	fmt.Println(v)
+	//fmt.Printf("cpu percent:%v\n", percent)
+	return int(sum)
 }
