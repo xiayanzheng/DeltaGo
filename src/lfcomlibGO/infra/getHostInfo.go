@@ -27,12 +27,15 @@ func GetCpuInfo() {
 }
 
 func GetCpuPercent() int {
-	percent, _ := cpu.Percent(time.Second, true)
-	// fmt.Println("type:", reflect.TypeOf(percent))
-	var sum float64 = 0
-	for _, num := range percent {
-		sum += num
-	}
-	//fmt.Printf("cpu percent:%v\n", percent)
-	return int(sum)
+	//percent, _ := cpu.Percent(time.Second, true)
+	//// fmt.Println("type:", reflect.TypeOf(percent))
+	//var sum float64 = 0
+	//for _, num := range percent {
+	//	sum += num
+	//}
+	////fmt.Printf("cpu percent:%v\n", percent)
+	//return int(sum)
+	percent, _ := cpu.Percent(time.Second, false)
+	fmt.Printf("cpu percent:%v\n", percent)
+	return 1
 }

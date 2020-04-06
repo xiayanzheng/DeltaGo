@@ -9,8 +9,10 @@ import (
 )
 
 var (
-	TimeGap     int
-	DurationMin int
+	TimeGap      int
+	DurationMin  int
+	FileName     string
+	DurationSecX int
 )
 
 func starter() {
@@ -31,7 +33,6 @@ func SetTimeGap() int {
 
 func SetCsvFile() string {
 	head := []string{"Time", "CPU", "Memory"}
-	var FileName string
 	FileName = "Data_"
 	FileName += dapr.TimeNowFormat_YYYY_MM_DD()
 	FileName += "_"
@@ -58,7 +59,6 @@ func Run() {
 	TimeGap := SetTimeGap()
 	FileName := SetCsvFile()
 	DurationSec := SetDuration()
-	var DurationSecX int
 	for {
 		CpuP := infra.GetCpuPercent()
 		MemoP := infra.GetMemoInfo()
