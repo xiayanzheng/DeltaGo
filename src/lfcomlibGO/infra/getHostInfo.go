@@ -27,8 +27,10 @@ func GetCpuInfo() {
 }
 
 func GetCpuPercent() int {
-	percent, _ := cpu.Percent(time.Second, true)
-	// fmt.Println("type:", reflect.TypeOf(percent))
+
+	percent, _ := cpu.Percent(time.Second, false)
+	//fmt.Println(percent)
+	//fmt.Println("type:", reflect.TypeOf(percent))
 	var sum float64 = 0
 	for _, num := range percent {
 		sum += num
