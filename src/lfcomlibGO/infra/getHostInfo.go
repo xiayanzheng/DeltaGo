@@ -3,6 +3,7 @@ package infra
 import (
 	"fmt"
 	"github.com/shirou/gopsutil/cpu"
+	"github.com/shirou/gopsutil/host"
 	"github.com/shirou/gopsutil/mem"
 	"time"
 )
@@ -24,6 +25,11 @@ func GetCpuInfo() {
 	for _, ci := range cpuInfos {
 		fmt.Println(ci)
 	}
+}
+
+func GetHostName() string {
+	n, _ := host.Info()
+	return n.Hostname
 }
 
 func GetCpuPercent() int {

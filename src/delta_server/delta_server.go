@@ -33,7 +33,7 @@ func SetTimeGap() int {
 
 func SetCsvFile() string {
 	head := []string{"Time", "CPU", "Memory"}
-	FileName = "Data_"
+	FileName = infra.GetHostName()
 	FileName += dapr.TimeNowFormat_YYYY_MM_DD()
 	FileName += "_"
 	FileName += dapr.TimeStamp()

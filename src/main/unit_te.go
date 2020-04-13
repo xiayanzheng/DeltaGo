@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	infra.GetCpuPercent()
+	infra.GetHostInfo()
 }
